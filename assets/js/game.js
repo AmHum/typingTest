@@ -10,21 +10,31 @@ var containerEl = document.querySelector(".container");
 var formEl = document.createElement("form");
 
 
-var difficulty = [
-    {name: "Easy"},
-    {name: "Medium"},
-    {name: "Hard"},
-    {name: "Programming"}
-];
 
-var timeSelect = [
-    {time: "1 minute"},
-    {time: "2 minutes"},
-    {time: "5 minutes"},
-    {time: "10 minutes"}
+var dropDown = [
+    [
+       {name: "1 minute",
+       number: 1,
+    },
+    {name: "2 minutes",
+    number: 2,
+    },
+    {name: "5 minutes",
+    number: 5
+    },
+    {name: "10 minutes",
+    number: 10
+    }
 
+    ],
+    
+    [
+       {name: "Easy"},
+       {name: "Medium"},
+       {name: "Hard"},
+       {name: "Programming"}
+    ]
 ]
-
 
 divEl.appendChild(paragraphEl);
 orderedEl.appendChild(listEl);
@@ -36,37 +46,42 @@ var clearPage = function(){
 var startUp = function(){
     var hEl = document.getElementById("head");
     var button = document.createElement("button");
-    var select = document.createElement("select");
-    var selectEl = document.createElement("select");
-    select.innerHTML = "<select name='time-option' class='select-dropdown'></select>";
-    selectEl.innerHTML= "<select name='mode-option' class='select-dropdown'></select>"
     
     containerEl.appendChild(formEl);
-    formEl.appendChild(select);
-    formEl.appendChild(selectEl);
-    formEl.appendChild(button);
     
-    for(var i = 0; i < timeSelect.length; i++){
-        var optionEl = document.createElement("option");
-        select.appendChild(optionEl);
-        optionEl.value = timeSelect[i].time;
-        optionEl.textContent = timeSelect[i].time;
+    // Needs to split up into at least 2 functions one with the for loop and the other with the value. 
     
+    
+    for(var i = 0; i < dropDown.length; i++){
+        var selectEl = document.createElement("select");
+        var result = "";
+        formEl.appendChild(selectEl);
+        selectEl.innerHTML= "<select name='name-option' class='select-dropdown'></select>"
+
+        
+        for(var j = 0; j < dropDown[i].length; j++){
+            var choice = dropDown[0][j].name + dropDown[1][j].name;
+            var optionEl = document.createElement("option");
+            selectEl.appendChild(optionEl);
+            optionEl.value = dropDown[i][j].name;
+            optionEl.textContent = dropDown[i][j].name;
+            result = optionEl.value;
+            console.log(result);
+            
+        }
+        button.addEventListener("click",  function(){
+        
+            console.log()
+            if(result === dropDown[i][j].name){
+              window.alert(result);
+            }
+        })
+        
+        
     }
+    
+    formEl.appendChild(button); 
 
-    for(var i = 0; i < difficulty.length; i++){
-        var option = document.createElement("option");
-        selectEl.appendChild(option);
-        option.value = difficulty[i].name;
-        option.textContent = difficulty[i].name;
-
-    }
-    
-    
-
-    
-    
-    
     headerEl.textContent = "Speed Typer";
     hEl.textContent = "Our Purpose";
     paragraphEl.textContent = "Welcome to Speed Typer. Are you looking for a job where you have to sit in front of a computer all day? Great news! This is the place for you. Here at Speed Typer you can hone your typing skills to feel comfortable in any job you need to type at. We want to help YOU become a better typer. "
@@ -74,9 +89,21 @@ var startUp = function(){
     console.log(hEl);
 }
 
-var processForm = function(time, mode){
+var processForm = function(selected){
+    return function(){
+        var selected = drop
+        window.alert("button was clicked");
+        selectOptions(selected);
+    }
 
+}
 
+var selectOptions = function(selected){
+    
+    if(dropDown.name === selected){
+        window.alert(selected);
+
+    }
 }
 
 startUp();
