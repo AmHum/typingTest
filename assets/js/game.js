@@ -7,6 +7,8 @@ var keyboardEl = document.getElementById("keyboard");
 var timerEl = document.getElementById("timer");
 var orderedEl = document.createElement("ol");
 
+var random_words_api = 'https://random-word-api.herokuapp.com/word?number=300'
+
 
 
 
