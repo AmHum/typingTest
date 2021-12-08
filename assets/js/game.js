@@ -4,97 +4,121 @@ var divEl = document.querySelector("#textContent");
 var paragraphEl = document.createElement("p");
 var listEl = document.createElement("li");
 var keyboardEl = document.getElementById("keyboard");
+var hEl = document.getElementById("head");
 var timerEl = document.getElementById("timer");
 var orderedEl = document.createElement("ol");
 var containerEl = document.querySelector(".container");
-var formEl = document.createElement("form");
+var formDiv = document.createElement("div");
+var select = document.createElement("select");
+var selectEl = document.createElement("select");
+var clockTime = 0
 
-
-
-var dropDown = [
-    [
-       {name: "1 minute",
-       number: 1,
-    },
-    {name: "2 minutes",
-    number: 2,
-    },
-    {name: "5 minutes",
-    number: 5
-    },
-    {name: "10 minutes",
-    number: 10
-    }
-
-    ],
-    
-    [
-       {name: "Easy"},
-       {name: "Medium"},
-       {name: "Hard"},
-       {name: "Programming"}
-    ]
-]
 
 divEl.appendChild(paragraphEl);
 orderedEl.appendChild(listEl);
+containerEl.appendChild(formDiv);
+
+
+
+var dropDown = {
+    time: [
+        {name: "1 minute",
+        clockNumber: 1,
+    },
+    {name: "2 minutes",
+    clockNumber: 2,
+    },
+    {name: "5 minutes",
+    clockNumber: 5
+},
+    {name: "10 minutes",
+    clockNumber: 10
+}
+
+],
+
+type: [
+    {name: "Easy"},
+    {name: "Medium"},
+    {name: "Hard"},
+    {name: "Programming"}
+]
+}
+
 
 var clearPage = function(){
+    select.innerHTML = "";
+    selectEl.innerHTML = "";
+    hEl.textContent = "";
+    paragraphEl.textContent = "";
+    
     
 }
 
 var startUp = function(){
-    var hEl = document.getElementById("head");
     var button = document.createElement("button");
+    var div1 = document.createElement("div");
+    var div2 = document.createElement("div");
     
-    containerEl.appendChild(formEl);
+    select.innerHTML = "<select name='time' class='select-dropdown' id='time-option'></select>"
+    selectEl.innerHTML= "<select name='type' class='select-dropdown' id = 'type-option'></select>"
     
-    // Needs to split up into at least 2 functions one with the for loop and the other with the value. 
+    formDiv.append(div1, div2);
+    div1.appendChild(select);
+    div1.appendChild(selectEl);
+    div2.appendChild(button);
     
-    
-    for(var i = 0; i < dropDown.length; i++){
-        var selectEl = document.createElement("select");
-        var result = "";
-        formEl.appendChild(selectEl);
-        selectEl.innerHTML= "<select name='name-option' class='select-dropdown'></select>"
-
-        
-        for(var j = 0; j < dropDown[i].length; j++){
-            var choice = dropDown[0][j].name + dropDown[1][j].name;
-            var optionEl = document.createElement("option");
-            selectEl.appendChild(optionEl);
-            optionEl.value = dropDown[i][j].name;
-            optionEl.textContent = dropDown[i][j].name;
-            result = optionEl.value;
-            console.log(result);
-            
-        }
-        button.addEventListener("click",  function(){
-        
-            console.log()
-            if(result === dropDown[i][j].name){
-              window.alert(result);
-            }
-        })
-        
-        
+    for(i = 0; i < dropDown.time.length; i++){
+        var option = document.createElement("option");
+        select.appendChild(option);
+        option.value = dropDown.time[i].name;
+      option.textContent = dropDown.time[i].name; 
+      
     }
-    
-    formEl.appendChild(button); 
 
+    for(i=0; i < dropDown.type.length; i++){
+        var optionEl = document.createElement("option");
+        selectEl.appendChild(optionEl);
+        optionEl.textContent = dropDown.type[i].name; 
+        optionEl.value = dropDown.type[i].name;
+    }
+
+    var chosenTime = select.querySelector("select[name='time']");
+    var chosenType = selectEl.querySelector("select[name='type']");
+    
+    formDiv.appendChild(button); 
     headerEl.textContent = "Speed Typer";
     hEl.textContent = "Our Purpose";
     paragraphEl.textContent = "Welcome to Speed Typer. Are you looking for a job where you have to sit in front of a computer all day? Great news! This is the place for you. Here at Speed Typer you can hone your typing skills to feel comfortable in any job you need to type at. We want to help YOU become a better typer. "
     button.textContent = "Start!"
-    console.log(hEl);
-}
-
-var processForm = function(selected){
-    return function(){
-        var selected = drop
-        window.alert("button was clicked");
-        selectOptions(selected);
+    
+    button.addEventListener("click", buttonListener(chosenTime, chosenType));
+        
     }
+
+    var buttonListener = function(time, type){
+        return function(){
+            processForm(time, type);
+        };
+    }
+    
+
+
+
+var processForm = function(time, type){
+    
+    var pickedTime = dropDown.time.clockNumber;
+    var pickedType = dropDown.type.name;
+    if(time === pickedTime){
+        clockTime = time * 60;
+    }
+
+    if(type === pickedType){
+        processType(type);
+    }
+    console.log(time);
+    console.log(type);
+    
 
 }
 
