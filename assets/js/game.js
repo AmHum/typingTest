@@ -5,7 +5,6 @@ var paragraphEl = document.createElement("p");
 var listEl = document.createElement("li");
 var keyboardEl = document.getElementById("keyboard");
 var hEl = document.getElementById("head");
-var timerEl = document.getElementById("timer");
 var orderedEl = document.createElement("ol");
 var containerEl = document.querySelector(".form-div");
 var formDiv = document.createElement("div");
@@ -13,8 +12,13 @@ var clockTime = 0
 var div1 = document.createElement("div");
 var div2 = document.createElement("div");
 var text_box = document.createElement("p");
+var text_input_element = document.createElement("input");
+var timeLeft = 0;
 
-var random_words_api = 'https://random-word-api.herokuapp.com/word?number=300';
+
+// is it possible to set a parameter on an API URL to adjust number of returned words?//
+
+var random_words_api = 'https://random-word-api.herokuapp.com/word?number=30';
 
 
 divEl.appendChild(paragraphEl);
@@ -31,12 +35,12 @@ var dropDown = {
     },
     {name: "2 minutes",
     clockNumber: 2,
-    },
-    {name: "5 minutes",
-    clockNumber: 5
 },
-    {name: "10 minutes",
-    clockNumber: 10
+{name: "5 minutes",
+clockNumber: 5
+},
+{name: "10 minutes",
+clockNumber: 10
 }
 
 ],
@@ -63,10 +67,10 @@ var startUp = function(){
     var selectTimeEl = document.createElement("select");
     var selectTypeEl = document.createElement("select");
     
-   selectTimeEl.name = "time";
-   selectTypeEl.name= "type";
-   selectTimeEl.className = "dropdown";
-   selectTypeEl.className = "dropdown";
+    selectTimeEl.name = "time";
+    selectTypeEl.name= "type";
+    selectTimeEl.className = "dropdown";
+    selectTypeEl.className = "dropdown";
     
     div1.appendChild(selectTimeEl);
     div1.appendChild(selectTypeEl);
@@ -77,9 +81,9 @@ var startUp = function(){
         selectTimeEl.appendChild(option);
         option.value = dropDown.time[i].name;
         option.textContent = dropDown.time[i].name; 
-      
+        
     }
-
+    
     for(i=0; i < dropDown.type.length; i++){
         var optionEl = document.createElement("option");
         selectTypeEl.appendChild(optionEl);
@@ -114,7 +118,7 @@ var processForm = function(time, type){
     
     console.log(time);
     console.log(type);
-    }
+}
 
 var processType = function(type){
     switch(type){
@@ -128,29 +132,32 @@ var processType = function(type){
             })
         }
     }
-
+    
 }
 
 var typingPage = function(words, time){
     console.log(words); 
-var string = "";
+    var string = "";
     for (i = 0; i < words.length; i++) {
         string = string + " " +  words[i];
     }
     text_box.textContent = string;
     div1.appendChild(text_box);
+    div2.appendChild(text_input_element);
+    
+    var timerEl = document.getElementById("timer");
+    var timeLeft = 0;
+    timerEl.textContent = "Time: " + 0;
+    
+
+    
 }
 
-var displayText = document.getElementById("#textContent");
 
-
-
-
-text_box.addEventListener('input', () => {
+text_input_element.addEventListener("input", () => {
     
-    var arrayWords = text_display_element.querySelectorAll('span')
-    var arrayValue = text_input_element.value.split('')
-    
+    var arrayText = text_box.querySelectorAll('span');
+    var arrayValue = text_input_element.value.split('');
     
     var correct = true
     arrayText.forEach((characterSpan, index) => {
@@ -166,8 +173,10 @@ text_box.addEventListener('input', () => {
             characterSpan.classList.remove('correct')
             characterSpan.classList.add('incorrect')
         }
-    })
-    if (correct) showResults();
+    //if (correct) //
+
+    })  
+     
 })
 
 

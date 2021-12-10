@@ -26,7 +26,7 @@ function typingPage() {
 
 function runTest() {
     return fetch(random_text_api)
-    .innerHTML = 
+
 }
 
 function showResults() {
