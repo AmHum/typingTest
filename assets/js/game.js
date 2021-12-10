@@ -10,11 +10,15 @@ var orderedEl = document.createElement("ol");
 var containerEl = document.querySelector(".form-div");
 var formDiv = document.createElement("div");
 var clockTime = 0
+var div1 = document.createElement("div");
+var div2 = document.createElement("div");
+var text_box = document.createElement("p");
 
 var random_words_api = 'https://random-word-api.herokuapp.com/word?number=300';
 
 
 divEl.appendChild(paragraphEl);
+divEl.append(div1, div2);
 orderedEl.appendChild(listEl);
 containerEl.appendChild(formDiv);
 
@@ -49,14 +53,13 @@ type: [
 var clearPage = function(){
     hEl.textContent = "";
     paragraphEl.textContent = "";
-    
+    div1.innerHTML = "";
+    div2.innerHTML = "";
     
 }
 
 var startUp = function(){
     var button = document.createElement("button");
-    var div1 = document.createElement("div");
-    var div2 = document.createElement("div");
     var selectTimeEl = document.createElement("select");
     var selectTypeEl = document.createElement("select");
     
@@ -65,7 +68,6 @@ var startUp = function(){
    selectTimeEl.className = "dropdown";
    selectTypeEl.className = "dropdown";
     
-    divEl.append(div1, div2);
     div1.appendChild(selectTimeEl);
     div1.appendChild(selectTypeEl);
     div2.appendChild(button);
@@ -129,8 +131,45 @@ var processType = function(type){
 
 }
 
-var typingPage = function(words){
-    console.log(words);
+var typingPage = function(words, time){
+    console.log(words); 
+var string = "";
+    for (i = 0; i < words.length; i++) {
+        string = string + " " +  words[i];
+    }
+    text_box.textContent = string;
+    div1.appendChild(text_box);
 }
+
+var displayText = document.getElementById("#textContent");
+
+
+
+
+text_box.addEventListener('input', () => {
+    
+    var arrayWords = text_display_element.querySelectorAll('span')
+    var arrayValue = text_input_element.value.split('')
+    
+    
+    var correct = true
+    arrayText.forEach((characterSpan, index) => {
+        var character = arrayValue[index]
+        if (character == null) {
+            characterSpan.classList.remove('correct')
+            characterSpan.classList.remove('incorrect')
+        } else if (character ===characterSpan.innerText) {
+            characterSpan.classList.add('correct')
+            characterSpan.classList.remove('incorrect')
+            correct = false
+        } else {
+            characterSpan.classList.remove('correct')
+            characterSpan.classList.add('incorrect')
+        }
+    })
+    if (correct) showResults();
+})
+
+
 
 startUp();
