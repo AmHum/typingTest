@@ -125,6 +125,7 @@ var processType = function(type){
                 });
             })
         }
+        case "Medium":
     }
 
 }
