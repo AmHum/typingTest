@@ -31,7 +31,7 @@ containerEl.appendChild(formDiv);
 var dropDown = {
     time: [
         {name: "1 minute",
-        clockNumber: 1,
+        clockNumber:1,
     },
     {name: "2 minutes",
     clockNumber: 2,
@@ -134,6 +134,21 @@ var processType = function(type){
     }
     
 }
+countDown = function(){
+    var timeLeft = (time);
+     timerEl.textContent = "Time: " + timeLeft;
+     timeInterval = setInterval(function(){
+         timeLeft--
+         if(timeLeft < 1){
+             endGame(timeLeft);
+         }
+     }, 1000)
+     
+     var timerEl = document.getElementById("timer");
+     
+}
+
+//I want to create an event listener to start the timer when the first key is pressed//
 
 var typingPage = function(words, time){
     console.log(words); 
@@ -145,13 +160,9 @@ var typingPage = function(words, time){
     div1.appendChild(text_box);
     div2.appendChild(text_input_element);
     
-    var timerEl = document.getElementById("timer");
-    var timeLeft = 0;
-    timerEl.textContent = "Time: " + 0;
-    
-
-    
 }
+
+// We'll need to create a mistakes array to count the mistakes for scoring purposes//
 
 
 text_input_element.addEventListener("input", () => {
