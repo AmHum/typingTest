@@ -1,6 +1,7 @@
 var headerEl = document.getElementById("title");
 var pageContentEl = document.querySelector(".pageContent");
 var divEl = document.querySelector(".textContent");
+var timerEl = document.getElementById("timer");
 var paragraphEl = document.createElement("p");
 var listEl = document.createElement("li");
 var keyboardEl = document.getElementById("keyboard");
@@ -14,6 +15,7 @@ var div2 = document.createElement("div");
 var text_box = document.createElement("p");
 var text_input_element = document.createElement("input");
 var timeLeft = 0;
+var timeInterval;
 
 
 // is it possible to set a parameter on an API URL to adjust number of returned words?//
@@ -46,7 +48,7 @@ clockNumber: 10
 ],
 
 type: [
-    {name: "Easy"},
+    {name: "Dictionary"},
     {name: "Medium"},
     {name: "Hard"},
     {name: "Programming"}
@@ -112,8 +114,35 @@ var buttonListener = function(){
 
 
 var processForm = function(time, type){
+   var clock = {
+       minutes:  0,
+       seconds:  0,
+   }
+
+    if(clock.seconds > 60){
+        clock.minutes = clock.seconds/60;
+    }
     
-    clockTime = time * 60;
+    switch(time){
+        case "1 minute": {
+            clock.seconds = 1;
+            break;
+        }
+        case "2 minutes": {
+            clock.seconds = 2;
+            break;
+        }
+        case "5 minutes": {
+            clock.seconds = 5;
+            break;
+        }
+        case "10 minutes": {
+            clock.seconds = 10;
+            break;
+        }
+    }
+    
+    clockTime = clock.seconds * 60;
     processType(type);
     
     console.log(time);
@@ -122,12 +151,12 @@ var processForm = function(time, type){
 
 var processType = function(type){
     switch(type){
-        case "Easy": {
+        case "Dictionary": {
             clearPage();
             type = random_words_api;
             fetch(type).then(function(response){
                 response.json().then(function(value){
-                    typingPage(value)
+                    typingPage(value);
                 });
             })
         }
@@ -135,23 +164,24 @@ var processType = function(type){
     
 }
 countDown = function(){
-    var timeLeft = (time);
-     timerEl.textContent = "Time: " + timeLeft;
+     timerEl.textContent = "Time: " + clockTime;
      timeInterval = setInterval(function(){
-         timeLeft--
-         if(timeLeft < 1){
-             endGame(timeLeft);
+         clockTime--
+         timerEl.textContent = "Time: " + clockTime;
+
+         if(clockTime < 1){
+             endGame();
          }
      }, 1000)
      
-     var timerEl = document.getElementById("timer");
+    
      
 }
 
 //I want to create an event listener to start the timer when the first key is pressed//
 
-var typingPage = function(words, time){
-    console.log(words); 
+var typingPage = function(words){
+    countDown();
     var string = "";
     for (i = 0; i < words.length; i++) {
         string = string + " " +  words[i];
@@ -163,7 +193,15 @@ var typingPage = function(words, time){
     })    
 }
 
+var endGame = function(){
+    clearInterval(timeInterval);
+    
+
+}
+
 // We'll need to create a mistakes array to count the mistakes for scoring purposes//
+// create an array for the correct words. 
+// We will need to account for 
 
 var correct = [];
 var incorrect = [];
