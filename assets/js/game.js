@@ -16,7 +16,10 @@ var text_box = document.createElement("p");
 var text_input_element = document.createElement("input");
 var timeLeft = 0;
 var timeInterval;
-var array = [];
+
+
+var count = 0;
+
 
 
 // is it possible to set a parameter on an API URL to adjust number of returned words?//
@@ -176,70 +179,92 @@ var processType = function(type){
     
 }
 countDown = function(){
-     timerEl.textContent = "Time: " + clockTime;
-     timeInterval = setInterval(function(){
-         clockTime--
-         timerEl.textContent = "Time: " + clockTime;
-
-         if(clockTime < 1){
-             endGame();
-         }
-     }, 1000)
-     
-    
-     
+    timeInterval = setInterval(function(){
+        clockTime--
+        timerEl.textContent = "Time: " + clockTime;
+        
+        if(clockTime < 1){
+            endGame();
+        }
+    }, 1000)
 }
 
 //I want to create an event listener to start the timer when the first key is pressed//
 
 var typingPage = function(words){
-    countDown();
+    timerEl.textContent = "Time: " + clockTime;
     var string = "";
     for (i = 0; i < words.length; i++) {
         string = string + " " +  words[i];
+        for (j = 0; j < words[i].length; j++) {
+        }
     }
+    for (i = 0; i < string.length; i++) {
+        var space = " ";
+    }
+
+    var arrayText = text_box.querySelectorAll("span");
+    var arrayValue = text_input_element.value.split('');
+    var correct = true
+    
+    arrayText.forEach((characterSpan, index) => {
+        var character = arrayValue[index]
+        if (character === null) {
+            characterSpan.classList.remove('correct')
+            characterSpan.classList.remove('incorrect')
+        } else if (character === characterSpan.innerText) {
+            characterSpan.classList.add('correct')
+            characterSpan.classList.remove('incorrect')
+        } else {
+            characterSpan.classList.remove('correct')
+            characterSpan.classList.add('incorrect')
+        }
+    if (correct) {
+        console.log(correctList)
+    }
+    
+    })  
+
+
     text_box.textContent = string;
     div1.appendChild(text_box);
     div2.appendChild(text_input_element);
-    
+    text_input_element.addEventListener("keyup", () => {
+        startGame();
+    })    
 }
 
 var endGame = function(){
     clearInterval(timeInterval);
     
-
+    
 }
+
+var startGame = function(){
+    count++;
+    if (count === 1){
+    countDown();
+    }
+    console.log(count);
+}
+
+
+
 
 // We'll need to create a mistakes array to count the mistakes for scoring purposes//
 // create an array for the correct words. 
 // We will need to account for 
 
+var correct = [];
+var incorrect = [];
 
-text_input_element.addEventListener("input", () => {
-    
-    var arrayText = text_box.querySelectorAll('span');
-    var arrayValue = text_input_element.value.split('');
-    
-    var correct = true
-    arrayText.forEach((characterSpan, index) => {
-        var character = arrayValue[index]
-        if (character == null) {
-            characterSpan.classList.remove('correct')
-            characterSpan.classList.remove('incorrect')
-        } else if (character ===characterSpan.innerText) {
-            characterSpan.classList.add('correct')
-            characterSpan.classList.remove('incorrect')
-            correct = false
-        } else {
-            characterSpan.classList.remove('correct')
-            characterSpan.classList.add('incorrect')
-        }
-    //if (correct) //
 
-    })  
-     
-})
 
 
 
 startUp();
+
+
+
+
+
