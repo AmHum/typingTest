@@ -16,11 +16,13 @@ var text_box = document.createElement("p");
 var text_input_element = document.createElement("input");
 var timeLeft = 0;
 var timeInterval;
+var array = [];
 
 
 // is it possible to set a parameter on an API URL to adjust number of returned words?//
 
 var random_words_api = 'https://random-word-api.herokuapp.com/word?number=30';
+var dad_jokes_api = "https://icanhazdadjoke.com"
 
 
 divEl.appendChild(paragraphEl);
@@ -49,7 +51,7 @@ clockNumber: 10
 
 type: [
     {name: "Dictionary"},
-    {name: "Medium"},
+    {name: "Dad Jokes"},
     {name: "Hard"},
     {name: "Programming"}
 ]
@@ -159,6 +161,16 @@ var processType = function(type){
                     typingPage(value);
                 });
             })
+            break;
+        }
+        case "Dad Jokes": {
+            clearPage();
+            var dad_Api = fetch(dad_jokes_api, {
+                header: {
+                   Accept: "text/plain"
+                }
+            })
+            console.log(dad_Api);
         }
     }
     
