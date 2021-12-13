@@ -159,36 +159,16 @@ var typingPage = function(words, time){
     text_box.textContent = string;
     div1.appendChild(text_box);
     div2.appendChild(text_input_element);
-    
+    text_input_element.addEventListener("keyup", () => {
+    })    
 }
 
 // We'll need to create a mistakes array to count the mistakes for scoring purposes//
 
+var correct = [];
+var incorrect = [];
 
-text_input_element.addEventListener("input", () => {
-    
-    var arrayText = text_box.querySelectorAll('span');
-    var arrayValue = text_input_element.value.split('');
-    
-    var correct = true
-    arrayText.forEach((characterSpan, index) => {
-        var character = arrayValue[index]
-        if (character == null) {
-            characterSpan.classList.remove('correct')
-            characterSpan.classList.remove('incorrect')
-        } else if (character ===characterSpan.innerText) {
-            characterSpan.classList.add('correct')
-            characterSpan.classList.remove('incorrect')
-            correct = false
-        } else {
-            characterSpan.classList.remove('correct')
-            characterSpan.classList.add('incorrect')
-        }
-    //if (correct) //
-
-    })  
-     
-})
+   
 
 
 
