@@ -15,6 +15,7 @@ var div2 = document.createElement("div");
 var text_box = document.createElement("p");
 var text_input_element = document.createElement("input");
 var timeLeft = 0;
+var timeInterval;
 
 
 // is it possible to set a parameter on an API URL to adjust number of returned words?//
@@ -136,7 +137,7 @@ var processForm = function(time, type){
             break;
         }
         case "10 minutes": {
-            clock = 10;
+            clock.seconds = 10;
             break;
         }
     }
@@ -155,7 +156,7 @@ var processType = function(type){
             type = random_words_api;
             fetch(type).then(function(response){
                 response.json().then(function(value){
-                    typingPage(value)
+                    typingPage(value);
                 });
             })
         }
@@ -163,12 +164,13 @@ var processType = function(type){
     
 }
 countDown = function(){
-    var timeLeft = clockTime;
-     
+     timerEl.textContent = "Time: " + clockTime;
      timeInterval = setInterval(function(){
-         timeLeft--
-         if(timeLeft < 1){
-             endGame(timeLeft);
+         clockTime--
+         timerEl.textContent = "Time: " + clockTime;
+
+         if(clockTime < 1){
+             endGame();
          }
      }, 1000)
      
@@ -179,7 +181,7 @@ countDown = function(){
 //I want to create an event listener to start the timer when the first key is pressed//
 
 var typingPage = function(words){
-    timerEl.textContent = "Time: " + clockTime;
+    countDown();
     var string = "";
     for (i = 0; i < words.length; i++) {
         string = string + " " +  words[i];
@@ -190,7 +192,15 @@ var typingPage = function(words){
     
 }
 
+var endGame = function(){
+    clearInterval(timeInterval);
+    
+
+}
+
 // We'll need to create a mistakes array to count the mistakes for scoring purposes//
+// create an array for the correct words. 
+// We will need to account for 
 
 
 text_input_element.addEventListener("input", () => {
