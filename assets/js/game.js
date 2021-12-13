@@ -185,6 +185,33 @@ var typingPage = function(words){
         for (j = 0; j < words[i].length; j++) {
         }
     }
+    for (i = 0; i < string.length; i++) {
+        var space = " ";
+    }
+
+    var arrayText = text_box.querySelectorAll("span");
+    var arrayValue = text_input_element.value.split('');
+    var correct = true
+    
+    arrayText.forEach((characterSpan, index) => {
+        var character = arrayValue[index]
+        if (character === null) {
+            characterSpan.classList.remove('correct')
+            characterSpan.classList.remove('incorrect')
+        } else if (character === characterSpan.innerText) {
+            characterSpan.classList.add('correct')
+            characterSpan.classList.remove('incorrect')
+        } else {
+            characterSpan.classList.remove('correct')
+            characterSpan.classList.add('incorrect')
+        }
+    if (correct) {
+        console.log(correctList)
+    }
+    
+    })  
+
+
     text_box.textContent = string;
     div1.appendChild(text_box);
     div2.appendChild(text_input_element);
@@ -222,3 +249,8 @@ var incorrect = [];
 
 
 startUp();
+
+
+
+
+
