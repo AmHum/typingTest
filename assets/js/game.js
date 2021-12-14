@@ -158,7 +158,7 @@ var processForm = function(time, type){
         }
     }
     
-    clockTime = clock.seconds * 60;
+    clockTime = clock.seconds * 5;
     processType(type);
     
     console.log(time);
@@ -316,24 +316,35 @@ var startGame = function(){
 }
 
 var saveScore = function(score){
-    localStorage.setItem("score", score);
+    var scores = localStorage.getItem('scores');
+    if(!scores){
+        scores = [];
+    } else{
+        scores = JSON.parse(scores);
+    }
+    scores.push({score: score});
+    localStorage.setItem("scores", JSON.stringify(scores));
+    return score;
 
 }
 
-var loadScore = function(){
-    localStorage.getItem(json.parse('score'));
-}
 
 var scorePage = function(){
     clearPage();
     var orderedEl = document.createElement("ol");
-    var listEl = document.createElement("li");
+    
 
     div1.appendChild(orderedEl);
-    orderedEl.appendChild(listEl);
+    
 
-    for(var i = 0; i < localStorage.length; i++){
-
+    var scores = JSON.parse(localStorage.getItem('scores'));
+    if(scores){
+        scores.sort((a, b) => b.score - a.score);
+        for(var i = 0; i < scores.length; i++){
+            var listItemEl = document.createElement("li");
+            orderedEl.appendChild(listItemEl);
+            listItemEl.textContent =  "WPM: " + scores[i].score;
+        }
     }
 
 
