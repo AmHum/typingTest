@@ -3,10 +3,10 @@ var pageContentEl = document.querySelector(".pageContent");
 var divEl = document.querySelector(".textContent");
 var timerEl = document.getElementById("timer");
 var paragraphEl = document.createElement("p");
-var listEl = document.createElement("li");
+
 var keyboardEl = document.getElementById("keyboard");
 var hEl = document.getElementById("head");
-var orderedEl = document.createElement("ol");
+
 var containerEl = document.querySelector(".form-div");
 var formDiv = document.createElement("div");
 var clockTime = 0
@@ -16,6 +16,7 @@ var text_box = document.createElement("p");
 var text_input_element = document.createElement("input");
 var timeLeft = 0;
 var timeInterval;
+var div3 = document.createElement("div");
 
 
 var count = 0;
@@ -25,12 +26,20 @@ var count = 0;
 // is it possible to set a parameter on an API URL to adjust number of returned words?//
 
 var random_words_api = 'https://random-word-api.herokuapp.com/word?number=30';
-var dad_jokes_api = "https://icanhazdadjoke.com"
+var dad_jokes_api = "https://icanhazdadjoke.com/search?limit=8&page="
+var quote_api = "https://quotable.io/quotes?limit=8&page="  
+console.log(quote_api.content);
+
+var getRandomQuote = function(api, toWords){
+     fetch(api, {headers: {Accept: 'application/json'}})
+    .then(response => response.json().then(data => typingPage(toWords(data))));
+    
+}
+
 
 
 divEl.appendChild(paragraphEl);
-divEl.append(div1, div2);
-orderedEl.appendChild(listEl);
+divEl.append(div1, div2, div3);
 containerEl.appendChild(formDiv);
 
 
@@ -54,22 +63,29 @@ clockNumber: 10
 
 type: [
     {name: "Dictionary"},
+    {name: "Quotes"},
     {name: "Dad Jokes"},
-    {name: "Hard"},
     {name: "Programming"}
 ]
 }
 
+var clock = {
+    minutes:  0,
+    seconds:  0,
+}
 
 var clearPage = function(){
     hEl.textContent = "";
     paragraphEl.textContent = "";
     div1.innerHTML = "";
     div2.innerHTML = "";
+    div3.innerHTML = "";
+    count = 0;
     
 }
 
 var startUp = function(){
+    clearPage();
     var button = document.createElement("button");
     var selectTimeEl = document.createElement("select");
     var selectTypeEl = document.createElement("select");
@@ -119,10 +135,6 @@ var buttonListener = function(){
 
 
 var processForm = function(time, type){
-   var clock = {
-       minutes:  0,
-       seconds:  0,
-   }
 
     if(clock.seconds > 60){
         clock.minutes = clock.seconds/60;
@@ -166,18 +178,47 @@ var processType = function(type){
             })
             break;
         }
+        case "Quotes": {
+            clearPage();
+            getRandomQuote(quote_api + randomPage(200), contentToWords("content"));
+            break;
+        }
         case "Dad Jokes": {
             clearPage();
-            var dad_Api = fetch(dad_jokes_api, {
-                header: {
-                   Accept: "text/plain"
-                }
-            })
-            console.log(dad_Api);
+            getRandomQuote(dad_jokes_api + randomPage(82), contentToWords("joke"))
         }
     }
     
 }
+
+var randomPage = function(max){
+    return Math.floor(Math.random() * max + 1);
+
+}
+
+var dadJokesToWords = function(data){
+    var words = [];
+    console.log("This function is running");
+    console.log(data);
+    return words
+
+}
+
+var contentToWords = function(content){
+    return function(data){
+        var words = [];
+        for(var i =0; i<data.results.length; i++){
+            var quote = data.results[i][content].split(" ");
+            for(var j = 0; j<quote.length; j++){
+                words.push(quote[j]);
+            }
+        }
+
+        return words;
+
+    }
+}
+
 countDown = function(){
     timeInterval = setInterval(function(){
         clockTime--
@@ -189,44 +230,48 @@ countDown = function(){
     }, 1000)
 }
 
-//I want to create an event listener to start the timer when the first key is pressed//
+
 
 var typingPage = function(words){
     timerEl.textContent = "Time: " + clockTime;
     var string = "";
+    text_box.innerHTML = "";
     for (i = 0; i < words.length; i++) {
-        string = string + " " +  words[i];
-        for (j = 0; j < words[i].length; j++) {
-        }
+        text_box.innerHTML += " ";
+        var spanEl = document.createElement("span");
+        text_box.appendChild(spanEl);
+        spanEl.textContent = words[i];
     }
-    for (i = 0; i < string.length; i++) {
-        var space = " ";
-    }
+   // text_box.textContent = string;
 
-    var arrayText = text_box.querySelectorAll("span");
-    var arrayValue = text_input_element.value.split('');
-    var correct = true
-    
-    arrayText.forEach((characterSpan, index) => {
-        var character = arrayValue[index]
-        if (character === null) {
-            characterSpan.classList.remove('correct')
-            characterSpan.classList.remove('incorrect')
+    text_input_element.addEventListener("input", function(){
+
+        
+        var arrayText = text_box.querySelectorAll("span");
+        var arrayValue = text_input_element.value.split(" ");
+        
+        
+        
+        arrayText.forEach((characterSpan, index) => {
+            var character = arrayValue[index]
+            var current = arrayValue.length -1;
+        if (character == null) {
+            characterSpan.classList.remove('correct');
+            characterSpan.classList.remove('incorrect');
+            characterSpan.classList.remove('current');
         } else if (character === characterSpan.innerText) {
-            characterSpan.classList.add('correct')
-            characterSpan.classList.remove('incorrect')
+            characterSpan.className = 'correct';
+        }else if(index === current) {
+            characterSpan.className = 'current';
         } else {
-            characterSpan.classList.remove('correct')
-            characterSpan.classList.add('incorrect')
+           characterSpan.className= 'incorrect';
         }
-    if (correct) {
-        console.log(correctList)
-    }
+    })
+    
     
     })  
 
 
-    text_box.textContent = string;
     div1.appendChild(text_box);
     div2.appendChild(text_input_element);
     text_input_element.addEventListener("keyup", () => {
@@ -236,6 +281,30 @@ var typingPage = function(words){
 
 var endGame = function(){
     clearInterval(timeInterval);
+    // Text_input_element shouldn't allow us to type in it after the time is up.
+    var correct = text_box.querySelectorAll(".correct");
+    var incorrect = text_box.querySelectorAll(".incorrect");
+
+    console.log(correct.length);
+    console.log(incorrect.length);
+
+
+    text_input_element.addEventListener("keydown", function(e){
+        e.preventDefault();
+        return false;
+    })
+
+    var score = (correct.length - incorrect.length)/clock.seconds;
+    saveScore(score);
+
+    var textEl = document.createElement("h3");
+    div3.appendChild(textEl);
+    var buttonEl = document.createElement('button');
+    textEl.textContent = "You finished! Your score is: " + score + " Please click button below to continue!"
+    div3.appendChild(buttonEl);
+    buttonEl.textContent = "HighScores!";
+
+    buttonEl.addEventListener("click", scorePage);
     
     
 }
@@ -245,18 +314,41 @@ var startGame = function(){
     if (count === 1){
     countDown();
     }
-    console.log(count);
+}
+
+var saveScore = function(score){
+    localStorage.setItem("score", score);
+
+}
+
+var loadScore = function(){
+    localStorage.getItem(json.parse('score'));
+}
+
+var scorePage = function(){
+    clearPage();
+    var orderedEl = document.createElement("ol");
+    var listEl = document.createElement("li");
+
+    div1.appendChild(orderedEl);
+    orderedEl.appendChild(listEl);
+
+    for(var i = 0; i < localStorage.length; i++){
+
+    }
+
+
+    hEl.textContent = "Thank you for playing! Welcome to the HighScore Page.";
+    buttonEl = document.createElement('button');
+
+    div2.appendChild(buttonEl);
+    buttonEl.textContent = "Play Again!";
+    buttonEl.addEventListener("click", function(){
+        location.reload();
+    })
 }
 
 
-
-
-// We'll need to create a mistakes array to count the mistakes for scoring purposes//
-// create an array for the correct words. 
-// We will need to account for 
-
-var correct = [];
-var incorrect = [];
 
 
 

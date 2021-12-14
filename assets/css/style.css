@@ -1,0 +1,22 @@
+.correct{
+    color: green;
+}
+
+.incorrect{
+    color: red;
+}
+
+.current{
+    color: lightblue;
+}
+
+span {
+    flex: flex;
+    flex-wrap: wrap;
+    padding: 3px;
+}
+
+p {
+    flex: flex;
+    flex-wrap: wrap;
+}
