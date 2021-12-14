@@ -117,7 +117,7 @@ var startUp = function(){
     
     headerEl.textContent = "Ka-chow Typing Test";
     hEl.textContent = "Our Purpose";
-    paragraphEl.textContent = "Welcome to Ka-chow Typing Test. Are you looking for a job where you have to sit in front of a computer all day? Great news! This is the place for you. Here at Speed Typer you can hone your typing skills to feel comfortable in any job you need to type at. We want to help YOU become a better typer. "
+    paragraphEl.textContent = "Welcome to Ka-chow Typing Test. Are you looking for a job where you have to sit in front of a computer all day? Great news! This is the place for you. Here at Ka-chow, you can hone your typing skills to feel comfortable in any job you need to type at. We want to help YOU become a better typer. "
     button.textContent = "Start!"
     
     button.addEventListener("click", buttonListener);
