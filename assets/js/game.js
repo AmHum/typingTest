@@ -16,10 +16,7 @@ var text_box = document.createElement("p");
 var text_input_element = document.createElement("input");
 var timeLeft = 0;
 var timeInterval;
-
-
 var count = 0;
-
 
 
 // is it possible to set a parameter on an API URL to adjust number of returned words?//
@@ -100,9 +97,9 @@ var startUp = function(){
     
     
     
-    headerEl.textContent = "Speed Typer";
+    headerEl.textContent = "Ka-chow Typing Test";
     hEl.textContent = "Our Purpose";
-    paragraphEl.textContent = "Welcome to Speed Typer. Are you looking for a job where you have to sit in front of a computer all day? Great news! This is the place for you. Here at Speed Typer you can hone your typing skills to feel comfortable in any job you need to type at. We want to help YOU become a better typer. "
+    paragraphEl.textContent = "Welcome to Ka-chow Typing Test. Are you looking for a job where you have to sit in front of a computer all day? Great news! This is the place for you. Here at Speed Typer you can hone your typing skills to feel comfortable in any job you need to type at. We want to help YOU become a better typer. "
     button.textContent = "Start!"
     
     button.addEventListener("click", buttonListener);
