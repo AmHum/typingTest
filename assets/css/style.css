@@ -45,6 +45,7 @@ p {
     margin: 0 auto;
     zoom: 200%;
     display: block;
+    text-align: center;
 }
 
 input {
