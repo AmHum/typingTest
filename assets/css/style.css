@@ -13,26 +13,34 @@
 
 p {
     text-align: center;
-    border-width: thick;
+    border-width: thin;
+    border-style: ridge;
     border-color: rgb(96, 255, 176);
     border-radius: 3px;
-    border-style: ridge;
 }
 
 #timer {
-    padding: 0 0 0 225px;
+    margin: 0 auto;
     zoom: 200%;
+    display: block;
 }
 
 input {
      display: block;
      margin : 0 auto;
      padding: 10px;
+     box-shadow: 0 0 8px 0 rgb(96, 255, 176);
 }
 
 button {
     display: block;
     margin: 0 auto;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    box-shadow: 0 8px 8px 0 rgb(96, 255, 176);
+    box-sizing: 2px;
+
 }
 select {
     display: block;
@@ -40,4 +48,8 @@ select {
     justify-content: space-between;
     justify-content: space-around;
     padding: 5px;
+    color: white;
+    background-color: black;
+    box-shadow: 0 8px 8px 0 rgb(96, 255, 176);
+    box-sizing: 2px;
 }
