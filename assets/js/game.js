@@ -158,7 +158,7 @@ var processForm = function(time, type){
         }
     }
     
-    clockTime = clock.seconds * 5;
+    clockTime = clock.seconds * 60;
     processType(type);
     
     console.log(time);

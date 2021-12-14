@@ -25,6 +25,7 @@ p {
     font-size: 50px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: rgb(96, 255, 176);
+    flex-wrap: wrap;
 }
 
 #head {
