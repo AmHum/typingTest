@@ -54,9 +54,6 @@ var dropDown = {
 {name: "5 minutes",
 clockNumber: 5
 },
-{name: "10 minutes",
-clockNumber: 10
-}
 
 ],
 
@@ -64,7 +61,6 @@ type: [
     {name: "Dictionary"},
     {name: "Quotes"},
     {name: "Dad Jokes"},
-    {name: "Programming"}
 ]
 }
 
@@ -117,7 +113,7 @@ var startUp = function(){
     
     headerEl.textContent = "Ka-chow Typing Test";
     hEl.textContent = "Our Purpose";
-    paragraphEl.textContent = "Welcome to Ka-chow Typing Test. Are you looking for a job where you have to sit in front of a computer all day? Great news! This is the place for you. Here at Ka-chow, you can hone your typing skills to feel comfortable in any job you need to type at. We want to help YOU become a better typer. "
+    paragraphEl.textContent = "Welcome to Ka-chow Typing Test. Are you looking for a job where you have to sit in front of a computer all day? Great news! This is the place for you. Here at Ka-chow, you can hone your typing skills to feel comfortable in any job you need to type. We want to help YOU become a better typer. With our typing test, and a little bit of luck you too could be like us. KAAAAAA-CHOW! "
     button.textContent = "Start!"
     
     button.addEventListener("click", buttonListener);
